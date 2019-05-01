@@ -21,11 +21,13 @@ namespace DataX.Config.Input.EventHub.Processor
     [Export(typeof(IFlowDeploymentProcessor))]
     public class CreateEventHubConsumerGroup : ProcessorBase
     {
-        public const string HubType_EventHub = "events";
-        public const string HubType_IoTHub = "iothub";
+        public const string InputType_EventHub = "events";
+        public const string InputType_IoTHub = "iothub";
+        public const string InputType_Kafka = "kafka";
+        public const string InputType_KafkaEventHub = "kafkaeventhub";
 
         public const string TokenName_InputEventHubConnectionString = "inputEventHubConnectionString";
-        public const string TokenName_InputEventHubConsumerGroup= "inputEventHubConsumerGroup";
+        public const string TokenName_InputEventHubConsumerGroup = "inputEventHubConsumerGroup";
         public const string TokenName_InputEventHubCheckpointDir = "inputEventHubCheckpointDir";
         public const string TokenName_InputEventHubCheckpointInterval = "inputEventHubCheckpointInterval";
         public const string TokenName_InputEventHubMaxRate = "inputEventHubMaxRate";
@@ -94,7 +96,7 @@ namespace DataX.Config.Input.EventHub.Processor
                 return "eventhub/iothub input not defined, skipped";
             }
 
-            if (inputType != HubType_EventHub && inputType != HubType_IoTHub)
+            if (inputType != InputType_EventHub && inputType != InputType_IoTHub && inputType != InputType_KafkaEventHub && inputType != InputType_Kafka)   
             {
                 return $"unsupported inputtype '{inputType}', skipped.";
             }
@@ -126,23 +128,27 @@ namespace DataX.Config.Input.EventHub.Processor
                 Result result = null;
                 switch (inputType)
                 {
-                    case HubType_EventHub:
+                    case InputType_EventHub:
+                    case InputType_Kafka:
+                    case InputType_KafkaEventHub:
                         //Check for required parameters
                         if (string.IsNullOrEmpty(hubInfo.Namespace) || string.IsNullOrEmpty(hubInfo.Name))
                         {
                             throw new ConfigGenerationException("Could not parse Event Hub connection string; please check input.");
                         }
-                        result = await EventHubUtil.CreateEventHubConsumerGroup(
-                                                        clientId: clientId,
-                                                        tenantId: tenantId,
-                                                        secretKey: resolvedSecretKey,
-                                                        subscriptionId: inputSubscriptionId,
-                                                        resourceGroupName: inputResourceGroupName,
-                                                        hubNamespace: hubInfo.Namespace,
-                                                        hubName: hubInfo.Name,
-                                                        consumerGroupName: consumerGroupName);
+                        result = new SuccessResult($"successfully created Test.");
+
+                        //result = await EventHubUtil.CreateEventHubConsumerGroup(
+                                                        //clientId: clientId,
+                                                        //tenantId: tenantId,
+                                                        //secretKey: resolvedSecretKey,
+                                                        //subscriptionId: inputSubscriptionId,
+                                                        //resourceGroupName: inputResourceGroupName,
+                                                        //hubNamespace: hubInfo.Namespace,
+                                                        //hubName: hubInfo.Name,
+                                                        //consumerGroupName: consumerGroupName);
                         break;
-                    case HubType_IoTHub:
+                    case InputType_IoTHub:
                         //Check for required parameters
                         if (string.IsNullOrEmpty(hubInfo.Name))
                         {

@@ -47,7 +47,7 @@ namespace DataX.Utilities.EventHub
             };
         }
 
-        public ApiResult CreateConsumerGroup(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, bool isIotHub = false)
+        public ApiResult CreateConsumerGroup(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, string inputType)
         {
             if (string.IsNullOrEmpty(namespaceName))
             {
@@ -67,7 +67,7 @@ namespace DataX.Utilities.EventHub
                 {
                     try
                     {
-                        if (isIotHub)
+                        if (inputType.Equals("iothub", StringComparison.OrdinalIgnoreCase))
                         {
                             string endpoint = $"https://management.azure.com/subscriptions/{_subscriptionId}/resourceGroups/{name}/providers/Microsoft.Devices/IotHubs/{eventHubName}/eventHubEndpoints/events/ConsumerGroups/{consumerGroupName}?api-version=2018-04-01";
                             if (CreateIotHubEndpointConsumerGroup(endpoint))
@@ -114,13 +114,15 @@ namespace DataX.Utilities.EventHub
         /// <param name="consumerGroupName">consumerGroupName</param>
         /// <param name="isIotHub">isIotHub</param>
         /// <returns>ApiResult which contains error or successful result as the case maybe</returns>
-        public ApiResult DeleteConsumerGroup(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, bool isIotHub = false)
+        public ApiResult DeleteConsumerGroup(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, string inputType)
         {
             Console.WriteLine("Deleting Consumer Group...");
 
             //Validate parameters
             if (string.IsNullOrEmpty(resourceGroupName) || string.IsNullOrEmpty(namespaceName))
+            {
                 return ApiResult.CreateError("ResourceGroup or Namespace empty while deleting consumer group: " + consumerGroupName);
+            }
 
             string errorMessage = "";
 
@@ -131,7 +133,7 @@ namespace DataX.Utilities.EventHub
                 {
                     try
                     {
-                        if (isIotHub)
+                        if (inputType.Equals("iothub", StringComparison.OrdinalIgnoreCase))
                         {
                             string endpoint = $"https://management.azure.com/subscriptions/{_subscriptionId}/resourceGroups/{name}/providers/Microsoft.Devices/IotHubs/{eventHubName}/eventHubEndpoints/events/ConsumerGroups/{consumerGroupName}?api-version=2018-04-01";
                             if (DeleteIotHubEndpointConsumerGroup(endpoint))

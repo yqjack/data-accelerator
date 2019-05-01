@@ -13,12 +13,12 @@ Licensed under the MIT License
     <Parameter Name="Flow.InteractiveQueryService_InstanceCount" Value="1" />
     <Parameter Name="Flow.Management_ASPNETCORE_ENVIRONMENT" Value="Development" />
     <Parameter Name="Flow.Management_InstanceCount" Value="1" />
-    <Parameter Name="AzureServicesAuthConnectionString" Value="" />
-    <Parameter Name="ServiceKeyvaultName" Value="" />
-    <Parameter Name="cosmosDBConfigConnectionString" Value="" />
-    <Parameter Name="cosmosDBConfigDatabaseName" Value="" />
-    <Parameter Name="cosmosDBConfigCollectionName" Value="" />
-    <Parameter Name="AppInsightsIntrumentationKey" Value="" />
+    <Parameter Name="AzureServicesAuthConnectionString" Value="RunAs=App;AppId=1616d702-0477-4e24-a621-a43775af42fe;TenantId=72f988bf-86f1-41af-91ab-2d7cd011db47;CertificateThumbprint=820EC76B85319C131F290A7C27BA7DF93CABD2DC;CertificateStoreLocation=LocalMachine" />
+    <Parameter Name="ServiceKeyvaultName" Value="kvServicestgisxdtne" />
+    <Parameter Name="cosmosDBConfigConnectionString" Value="keyvault://kvServicestgisxdtne/configgen-configgenconfigs" />
+    <Parameter Name="cosmosDBConfigDatabaseName" Value="keyvault://kvServicestgisxdtne/configgen-configgenconfigsdatabasename" />
+    <Parameter Name="cosmosDBConfigCollectionName" Value="configgenConfigs" />
+    <Parameter Name="AppInsightsIntrumentationKey" Value="configgen-aiInstrumentationKey" />
     <Parameter Name="MefStorageAccountName" Value="" />
     <Parameter Name="MefContainerName" Value="" />
     <Parameter Name="MefBlobDirectory" Value="" />

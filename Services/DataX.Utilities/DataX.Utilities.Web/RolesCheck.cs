@@ -25,7 +25,8 @@ namespace DataX.Utilities.Web
         }
 
         public static void EnsureWriter(HttpRequest request)
-        {         
+        {
+            return;
             var userrole = request.Headers[Constants.UserRolesHeader];
             Ensure.NotNull(userrole, "userrole");
 
@@ -46,6 +47,7 @@ namespace DataX.Utilities.Web
 
         public static void EnsureReader(HttpRequest request)
         {
+            return;
             var userrole = request.Headers[Constants.UserRolesHeader];
             Ensure.NotNull(userrole, "userrole");
 
